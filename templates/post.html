@@ -1,0 +1,22 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Объявление
+{% endblock title %}
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+<h2>{{ post.text|safe }}</h2>
+<h3>{{ post.author }}, {{ post.time_add|date:'d.m.Y' }}</h3>
+
+{# Доступ к ссылкам при наличии соответствующих прав #}
+{% if perms.board.change_post and post.author == request.user.author %}
+    <a href="{{ post.pk }}/edit/">Редактировать</a><br>
+{% endif %}
+{% if perms.board.delete_post and post.author == request.user.author %}
+    <a href="{{ post.pk }}/delete/">Удалить</a><br>
+{% endif %}
+{% if perms.board.add_comment and not post.author == request.user.author %}
+    <a href="{{ post.pk }}/comment/">Добавить отклик</a>
+{% endif %}
+{% endblock content %}

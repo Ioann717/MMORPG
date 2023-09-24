@@ -1,0 +1,59 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Доска объявлений
+{% endblock title %}
+
+{% block content %}
+    <h1>Все объявления</h1>
+    {% if posts %}
+        <table cellpadding="10" align="center">
+            <tr>
+                <td>АВТОР</td>
+                <td>ДАТА</td>
+                <td>ЗАГОЛОВОК</td>
+                <td>ТЕКСТ</td>
+                <td>КАТЕГОРИЯ</td>
+            </tr>
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.author }}</td>
+                <td>{{ post.time_add|date:'d.m.Y' }}</td>
+                <td><a href="{{ post.pk }}">{{ post.title|truncatechars:25 }}</a></td>
+                <td>{{ post.text|safe }}</td>
+                <td>
+                    {% for category in categories %}
+                        {% if category.0 == post.category %}
+                            {{ category.1 }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h2>Объявлений нет!</h2>
+    {% endif %}
+
+    {# Пагинация #}
+    {# Информация о предыдущих страницах #}
+    {% if page_obj.has_previous %}
+        <a href="?page=1">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            ...
+            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+    {% endif %}
+
+    {# Информация о текущей странице #}
+    {{ page_obj.number }}
+
+    {# Информация о следующих страницах #}
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+        {% if paginator.num_pages != page_obj.next_page_number %}
+            ...
+            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    {% endif %}
+{% endblock content %}

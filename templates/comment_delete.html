@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Удаление отклика
+{% endblock title %}
+
+{% block content %}
+<h1>Удаление отклика</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Удалить {{ comment.text|truncatechars:10 }}?</p>
+    <input type="submit" value="Удалить">
+</form>
+{% endblock content %}

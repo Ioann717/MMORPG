@@ -1,0 +1,11 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Отклик на объявление
+{% endblock title %}
+
+{% block content %}
+<h2>Отклик к объявлению: {{ comment.post.title }}</h2>
+<h2>{{ comment.text }}</h2>
+<h3>{{ comment.author }}, {{ comment.time_add|date:'d.m.Y' }}</h3>
+{% endblock content %}

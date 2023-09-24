@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Проверка кода
+{% endblock title %}
+
+{% block content %}
+<h3>Введите код подтверждения, полученный по почте:</h3>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Проверить">
+</form>
+{% endblock content %}

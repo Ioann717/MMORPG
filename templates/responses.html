@@ -1,0 +1,46 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Отклики
+{% endblock title %}
+
+{% block content %}
+    <h1>Отклики на ваши объявления</h1>
+
+    <form action="" method="get">
+        {# Фильтрация откликов по объявлениям #}
+        {{ filterset.form.as_p }}
+        <input type="submit" value="Найти" />
+    </form>
+
+    {% if comments %}
+        <table cellpadding="10" align="center">
+            <tr>
+                <td>ДАТА</td>
+                <td>ЗАГОЛОВОК ОБЪЯВЛЕНИЯ</td>
+                <td>АВТОР ОТКЛИКА</td>
+                <td>ТЕКСТ ОТКЛИКА</td>
+                <td>ДЕЙСТВИЕ</td>
+            </tr>
+            {% for comment in comments %}
+            <tr>
+                <td>{{ comment.time_add|date:'d.m.Y' }}</td>
+                <td>{{ comment.post.title }}</td>
+                <td>{{ comment.author }}</td>
+                <td>{{ comment.text }}</td>
+                <td>
+                    <!-- Кнопки принять/отклонить отклик -->
+                    {% if not comment.approval %}
+                    <button style="background: lightgreen"><a href="{{ comment.pk }}/approve">Принять</a></button>
+                    <button style="background: red"><a href="{{ comment.pk }}/delete">Удалить</a></button>
+                    {% else %}
+                    Принят
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h2>Откликов нет!</h2>
+    {% endif %}
+{% endblock content %}

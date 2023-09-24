@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>InfoBoard</title>
+</head>
+<body>
+    <p>Здравствуйте! Новые посты за прошедшую неделю!</p>
+    <ul>
+        {% for post in posts %}
+            <li><a href="{{ link }}{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
